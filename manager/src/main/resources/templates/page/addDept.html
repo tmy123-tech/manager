@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>添加部门</title>
+    <style>
+        body{
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<br>
+<br>
+    <div class="layui-form layuimini-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">部门名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="部门名称不能为空" placeholder="请输入部门名称" value="" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级部门</label>
+            <div class="layui-input-inline">
+                <input type="text" name="parent_id" placeholder="请选择上级部门" value="" class="layui-input">
+            </div>
+            <button class="layui-btn layui-btn-normal " id="btn-choose" >选择</button>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sort"  placeholder="请填写排序号" value="" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status" lay-skin="switch" lay-text="正常|禁用">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label required">部门类型:</label>
+            <div class="layui-input-inline">
+                <select lay-verify="required">
+                    <option value="1">公司</option>
+                    <option value="2">部门</option>
+                    <option value="3">小组</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    layui.use(['form',], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
+
+        $('#btn-choose').click(function () {
+            //弹出一个页面层
+            layer.open({
+                type: 1,
+                area: ['600px', '360px'],
+                shadeClose: true, //点击遮罩关闭
+                content: '<div id="test-tree-demo1"></div>'
+            });
+        })
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var index = layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            }, function () {
+
+                // 关闭弹出层
+                layer.close(index);
+
+                var iframeIndex = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(iframeIndex);
+
+            });
+            return false;
+        });
+    });
+</script>
+
+</html>

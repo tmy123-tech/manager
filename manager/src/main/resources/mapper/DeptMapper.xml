@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aqsf.manager.dao.DeptMapper">
+    <select id="selectAllDept" resultType="com.aqsf.manager.entity.Dept">
+        select * from dept;
+    </select>
+
+    <insert id="addDept" parameterType="com.aqsf.manager.entity.Dept">
+        insert into dept(parent_id, name, charge_id, type, sort, create, status)
+        values (#{parent_id},#{name},,#{charge_id},#{type},#{sort},#{create},#{status})
+    </insert>
+
+
+    <select id="selectDeptById" resultType="com.aqsf.manager.entity.Dept" parameterType="int">
+        select * from dept where id=#{id}
+    </select>
+
+    <select id="updateDept" parameterType="com.aqsf.manager.entity.Dept">
+        update dept set name=#{name} , sort=#{sort} , status=#{status} where id=#{id}
+    </select>
+</mapper>
